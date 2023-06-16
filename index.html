@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>User Registration Form</h2>
+  <form id="registrationForm" onsubmit="validateForm(event)">
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+    <input type="submit" value="Register">
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault(); // Prevent form submission for now
+
+      // Regular expressions for validation
+      var nameRegex = /^[a-zA-Z ]+$/;
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+      // Get form inputs
+      var fullNameInput = document.getElementById('fullName');
+      var emailInput = document.getElementById('email');
+      var passwordInput = document.getElementById('password');
+      var confirmPasswordInput = document.getElementById('confirmPassword');
+
+      // Get error elements
+      var fullNameError = document.getElementById('fullNameError');
+      var emailError = document.getElementById('emailError');
+      var passwordError = document.getElementById('passwordError');
+      var confirmPasswordError = document.getElementById('confirmPasswordError');
+
+      // Clear previous errors
+      fullNameError.innerHTML = '';
+      emailError.innerHTML = '';
+      passwordError.innerHTML = '';
+      confirmPasswordError.innerHTML = '';
+
+      // Perform validation
+      var isValid = true;
+
+      if (!nameRegex.test(fullNameInput.value)) {
+        fullNameError.innerHTML = 'Please enter a valid full name.';
+        isValid = false;
+      }
+
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.innerHTML = 'Please enter a valid email address.';
+        isValid = false;
+      }
+
+      if (!passwordRegex.test(passwordInput.value)) {
+        passwordError.innerHTML = 'Password must be at least 8 characters long and contain at least one digit, one lowercase letter, and one uppercase letter.';
+        isValid = false;
+      }
+
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        confirmPasswordError.innerHTML = 'Passwords do not match.';
+        isValid = false;
+      }
+
+      // If all inputs are valid, submit the form
+      if (isValid) {
+        document.getElementById('registrationForm').submit();
+      }
+    }
+  </script>
+</body>
+</html>
